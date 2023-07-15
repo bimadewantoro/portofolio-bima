@@ -28,7 +28,7 @@ const submit = () => {
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Project</h2>
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Add Project</h2>
         </template>
 
         <div class="py-12">
@@ -56,7 +56,7 @@ const submit = () => {
                             <option v-for="skill in skills" :key="skill.id" :value="skill.id">{{ skill.name }}</option>
                         </select>
                     </div>
-                    <div>
+                    <div class="mt-4">
                         <InputLabel for="name" value="Name" />
 
                         <TextInput
@@ -67,12 +67,13 @@ const submit = () => {
                             required
                             autofocus
                             autocomplete="name"
+                            placeholder="Ex. My Project"
                         />
 
                         <InputError class="mt-2" :message="form.errors.name" />
                     </div>
 
-                    <div>
+                    <div class="mt-4">
                         <InputLabel for="project_url" value="URL" />
 
                         <TextInput
@@ -81,6 +82,7 @@ const submit = () => {
                             class="mt-1 block w-full"
                             v-model="form.project_url"
                             autocomplete="projecturl"
+                            placeholder="Ex. https://myproject.com"
                         />
 
                         <InputError class="mt-2" :message="form.errors.project_url" />
@@ -100,8 +102,7 @@ const submit = () => {
                     </div>
 
                     <div class="flex items-center justify-end mt-4">
-
-                        <PrimaryButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                        <PrimaryButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing" style="background-color: #22C55E;">
                             Store
                         </PrimaryButton>
                     </div>
