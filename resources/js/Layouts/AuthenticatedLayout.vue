@@ -142,6 +142,36 @@ const showingNavigationDropdown = ref(false);
                         </ResponsiveNavLink>
                     </div>
 
+                    <div class="pt-2 pb-3 space-y-1">
+                        <ResponsiveNavLink :href="route('blogs.index')" :active="route().current('dashboard')">
+                            Blogs
+                        </ResponsiveNavLink>
+                    </div>
+
+                    <div class="pt-2 pb-3 space-y-1">
+                        <ResponsiveNavLink :href="route('skills.index')" :active="route().current('dashboard')">
+                            Skills
+                        </ResponsiveNavLink>
+                    </div>
+
+                    <div class="pt-2 pb-3 space-y-1">
+                        <ResponsiveNavLink :href="route('projects.index')" :active="route().current('dashboard')">
+                            Projects
+                        </ResponsiveNavLink>
+                    </div>
+
+                    <div class="pt-2 pb-3 space-y-1">
+                        <ResponsiveNavLink :href="route('educations.index')" :active="route().current('dashboard')">
+                            Educations
+                        </ResponsiveNavLink>
+                    </div>
+
+                    <div class="pt-2 pb-3 space-y-1">
+                        <ResponsiveNavLink :href="route('experiences.index')" :active="route().current('dashboard')">
+                            Experiences
+                        </ResponsiveNavLink>
+                    </div>
+
                     <!-- Responsive Settings Options -->
                     <div class="pt-4 pb-1 border-t border-gray-200">
                         <div class="px-4">
