@@ -6,6 +6,7 @@ use App\Http\Resources\ExperienceResource;
 use App\Models\Experience;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 class ExperienceController extends Controller
@@ -64,25 +65,14 @@ class ExperienceController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Experience $experience)
     {
-        //
+        return Inertia::render("Experiences/Edit", compact('experience'));
     }
 
     /**
@@ -92,9 +82,24 @@ class ExperienceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Experience $experience)
     {
-        //
+        $image = $experience->image;
+
+        if ($request->hasFile('image')) {
+            Storage::delete($image);
+            $image = $request->file('image')->store('experiences');
+        }
+
+        $experience->update([
+            "title" => $request->title,
+            "description" => $request->description,
+            "image" => $image,
+            "start_date" => $request->start_date,
+            "end_date" => $request->end_date,
+        ]);
+
+        return Redirect::route('experiences.index');
     }
 
     /**
@@ -103,8 +108,11 @@ class ExperienceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Experience $experience)
     {
-        //
+        Storage::delete($experience->image);
+        $experience->delete();
+
+        return Redirect::route('experiences.index');
     }
 }

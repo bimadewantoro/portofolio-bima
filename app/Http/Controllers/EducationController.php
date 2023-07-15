@@ -63,25 +63,14 @@ class EducationController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Education $education)
     {
-        //
+        return Inertia::render("Educations/Edit", compact('education'));
     }
 
     /**
@@ -91,9 +80,29 @@ class EducationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Education $education)
     {
-        //
+        $request->validate([
+            "school" => "required | min:3 | max:255",
+            "degree" => "required",
+            "field" => "required | min:3 | max:255",
+            "start_date" => "required",
+            "end_date" => "required",
+        ]);
+
+        try {
+            $education->update([
+                "school" => $request->school,
+                "degree" => $request->degree,
+                "field" => $request->field,
+                "start_date" => $request->start_date,
+                "end_date" => $request->end_date,
+            ]);
+
+            return Redirect::route('educations.index');
+        } catch (\Exception $e) {
+            return Redirect::back()->with('error', $e->getMessage());
+        }
     }
 
     /**
@@ -102,8 +111,14 @@ class EducationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Education $education)
     {
-        //
+        try {
+            $education->delete();
+            return Redirect::route('educations.index');
+        } catch (\Exception $e) {
+            return Redirect::back()->with('error', $e->getMessage());
+        }
     }
 }
+
