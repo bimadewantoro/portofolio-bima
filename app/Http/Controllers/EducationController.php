@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Education;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 class EducationController extends Controller
@@ -35,7 +37,27 @@ class EducationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+         $request->validate([
+             "school" => "required | min:3 | max:255",
+             "degree" => "required",
+             "field" => "required | min:3 | max:255",
+             "start_date" => "required",
+             "end_date" => "required",
+         ]);
+
+         try {
+             Education::create([
+                 "school" => $request->school,
+                 "degree" => $request->degree,
+                 "field" => $request->field,
+                 "start_date" => $request->start_date,
+                 "end_date" => $request->end_date,
+             ]);
+
+             return Redirect::route('educations.index');
+         } catch (\Exception $e) {
+             return Redirect::back()->with('error', $e->getMessage());
+         }
     }
 
     /**

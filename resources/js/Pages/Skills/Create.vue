@@ -39,6 +39,7 @@ const submit = () => {
                             required
                             autofocus
                             autocomplete="name"
+                            placeholder="Ex. Laravel"
                         />
 
                         <InputError class="mt-2" :message="form.errors.name" />
@@ -59,9 +60,11 @@ const submit = () => {
 
                     <div class="flex items-center justify-end mt-4">
 
-                        <PrimaryButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                            Store
-                        </PrimaryButton>
+                        <div class="flex items-center justify-end mt-4">
+                            <PrimaryButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing" style="background-color: #22C55E;">
+                                Store
+                            </PrimaryButton>
+                        </div>
                     </div>
                 </form>
             </div>

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Experience;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 class ExperienceController extends Controller
@@ -35,7 +37,28 @@ class ExperienceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+                "title" => "required | min:3 | max:255",
+                "description" => "required",
+                "image" => "required | image | mimes:jpeg,png,jpg,gif,svg | max:2048",
+                "start_date" => "required",
+                "end_date" => "required",
+            ]);
+
+            if ($request->hasFile('image')) {
+                $image = $request->file('image')->store('experiences');
+                Experience::create([
+                    "title" => $request->title,
+                    "description" => $request->description,
+                    "image" => $image,
+                    "start_date" => $request->start_date,
+                    "end_date" => $request->end_date,
+                ]);
+
+                return Redirect::route('experiences.index');
+            }
+
+            return Redirect::back();
     }
 
     /**
