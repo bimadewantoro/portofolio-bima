@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\EducationResource;
 use App\Models\Education;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -16,7 +17,8 @@ class EducationController extends Controller
      */
     public function index()
     {
-        return Inertia::render("Educations/Index");
+        $educations = EducationResource::collection(Education::all());
+        return Inertia::render("Educations/Index", compact('educations'));
     }
 
     /**

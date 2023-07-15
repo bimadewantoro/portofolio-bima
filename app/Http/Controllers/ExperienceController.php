@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ExperienceResource;
 use App\Models\Experience;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -16,7 +17,8 @@ class ExperienceController extends Controller
      */
     public function index()
     {
-        return Inertia::render("Experiences/Index");
+        $experiences = ExperienceResource::collection(Experience::all());
+        return Inertia::render("Experiences/Index", compact('experiences'));
     }
 
     /**
